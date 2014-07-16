@@ -1034,7 +1034,7 @@ equal_range(ForwardIterator first,
  *  \tparam OutputIterator is a model of <a href="http://www.sgi.com/tech/stl/OutputIterator.html">Output Iterator</a>.
  *                        and \c ForwardIterator's difference_type is convertible to \c OutputIterator's \c value_type.
  *
- *  \pre The ranges <tt>[first,last)</tt> and <tt>[result, result + (last - first))</tt> shall not overlap.
+ *  \pre The ranges <tt>[first,last)</tt> <tt>[values_first,values_last)</tt>, and <tt>[result, result + (last - first))</tt> shall not overlap.
  *
  *  The following code snippet demonstrates how to use \p lower_bound
  *  to search for multiple values in a ordered range using the \p thrust::device execution policy for
@@ -1104,7 +1104,7 @@ OutputIterator lower_bound(const thrust::detail::execution_policy_base<DerivedPo
  *  \tparam OutputIterator is a model of <a href="http://www.sgi.com/tech/stl/OutputIterator.html">Output Iterator</a>.
  *                        and \c ForwardIterator's difference_type is convertible to \c OutputIterator's \c value_type.
  *
- *  \pre The ranges <tt>[first,last)</tt> and <tt>[result, result + (last - first))</tt> shall not overlap.
+ *  \pre The ranges <tt>[first,last)</tt> <tt>[values_first,values_last)</tt>, and <tt>[result, result + (last - first))</tt> shall not overlap.
  *
  *  The following code snippet demonstrates how to use \p lower_bound
  *  to search for multiple values in a ordered range.
@@ -1176,7 +1176,7 @@ OutputIterator lower_bound(ForwardIterator first,
  *                        and \c ForwardIterator's difference_type is convertible to \c OutputIterator's \c value_type.
  *  \tparam StrictWeakOrdering is a model of <a href="http://www.sgi.com/tech/stl/StrictWeakOrdering.html">Strict Weak Ordering</a>.
  *
- *  \pre The ranges <tt>[first,last)</tt> and <tt>[result, result + (last - first))</tt> shall not overlap.
+ *  \pre The ranges <tt>[first,last)</tt> <tt>[values_first,values_last)</tt>, and <tt>[result, result + (last - first))</tt> shall not overlap.
  *
  *  The following code snippet demonstrates how to use \p lower_bound
  *  to search for multiple values in a ordered range.
@@ -1250,7 +1250,7 @@ OutputIterator lower_bound(const thrust::detail::execution_policy_base<DerivedPo
  *                        and \c ForwardIterator's difference_type is convertible to \c OutputIterator's \c value_type.
  *  \tparam StrictWeakOrdering is a model of <a href="http://www.sgi.com/tech/stl/StrictWeakOrdering.html">Strict Weak Ordering</a>.
  *
- *  \pre The ranges <tt>[first,last)</tt> and <tt>[result, result + (last - first))</tt> shall not overlap.
+ *  \pre The ranges <tt>[first,last)</tt> <tt>[values_first,values_last)</tt>, and <tt>[result, result + (last - first))</tt> shall not overlap.
  *
  *  The following code snippet demonstrates how to use \p lower_bound
  *  to search for multiple values in a ordered range.
@@ -1322,7 +1322,7 @@ OutputIterator lower_bound(ForwardIterator first,
  *  \tparam OutputIterator is a model of <a href="http://www.sgi.com/tech/stl/OutputIterator.html">Output Iterator</a>.
  *                        and \c ForwardIterator's difference_type is convertible to \c OutputIterator's \c value_type.
  *
- *  \pre The ranges <tt>[first,last)</tt> and <tt>[result, result + (last - first))</tt> shall not overlap.
+ *  \pre The ranges <tt>[first,last)</tt> <tt>[values_first,values_last)</tt>, and <tt>[result, result + (last - first))</tt> shall not overlap.
  *
  *  The following code snippet demonstrates how to use \p upper_bound
  *  to search for multiple values in a ordered range using the \p thrust::device execution policy for
@@ -1392,7 +1392,7 @@ OutputIterator upper_bound(const thrust::detail::execution_policy_base<DerivedPo
  *  \tparam OutputIterator is a model of <a href="http://www.sgi.com/tech/stl/OutputIterator.html">Output Iterator</a>.
  *                        and \c ForwardIterator's difference_type is convertible to \c OutputIterator's \c value_type.
  *
- *  \pre The ranges <tt>[first,last)</tt> and <tt>[result, result + (last - first))</tt> shall not overlap.
+ *  \pre The ranges <tt>[first,last)</tt> <tt>[values_first,values_last)</tt>, and <tt>[result, result + (last - first))</tt> shall not overlap.
  *
  *  The following code snippet demonstrates how to use \p upper_bound
  *  to search for multiple values in a ordered range.
@@ -1464,7 +1464,7 @@ OutputIterator upper_bound(ForwardIterator first,
  *                        and \c ForwardIterator's difference_type is convertible to \c OutputIterator's \c value_type.
  *  \tparam StrictWeakOrdering is a model of <a href="http://www.sgi.com/tech/stl/StrictWeakOrdering.html">Strict Weak Ordering</a>.
  *
- *  \pre The ranges <tt>[first,last)</tt> and <tt>[result, result + (last - first))</tt> shall not overlap.
+ *  \pre The ranges <tt>[first,last)</tt> <tt>[values_first,values_last)</tt>, and <tt>[result, result + (last - first))</tt> shall not overlap.
  *
  *  The following code snippet demonstrates how to use \p upper_bound
  *  to search for multiple values in a ordered range using the \p thrust::device execution policy for
@@ -1540,7 +1540,7 @@ OutputIterator upper_bound(const thrust::detail::execution_policy_base<DerivedPo
  *                        and \c ForwardIterator's difference_type is convertible to \c OutputIterator's \c value_type.
  *  \tparam StrictWeakOrdering is a model of <a href="http://www.sgi.com/tech/stl/StrictWeakOrdering.html">Strict Weak Ordering</a>.
  *
- *  \pre The ranges <tt>[first,last)</tt> and <tt>[result, result + (last - first))</tt> shall not overlap.
+ *  \pre The ranges <tt>[first,last)</tt> <tt>[values_first,values_last)</tt>, and <tt>[result, result + (last - first))</tt> shall not overlap.
  *
  *  The following code snippet demonstrates how to use \p upper_bound
  *  to search for multiple values in a ordered range.
@@ -1613,7 +1613,7 @@ OutputIterator upper_bound(ForwardIterator first,
  *  \tparam OutputIterator is a model of <a href="http://www.sgi.com/tech/stl/OutputIterator.html">Output Iterator</a>.
  *                        and bool is convertible to \c OutputIterator's \c value_type.
  *
- *  \pre The ranges <tt>[first,last)</tt> and <tt>[result, result + (last - first))</tt> shall not overlap.
+ *  \pre The ranges <tt>[first,last)</tt> <tt>[values_first,values_last)</tt>, and <tt>[result, result + (last - first))</tt> shall not overlap.
  *
  *  The following code snippet demonstrates how to use \p binary_search
  *  to search for multiple values in a ordered range using the \p thrust::device execution policy for
@@ -1684,7 +1684,7 @@ OutputIterator binary_search(const thrust::detail::execution_policy_base<Derived
  *  \tparam OutputIterator is a model of <a href="http://www.sgi.com/tech/stl/OutputIterator.html">Output Iterator</a>.
  *                        and bool is convertible to \c OutputIterator's \c value_type.
  *
- *  \pre The ranges <tt>[first,last)</tt> and <tt>[result, result + (last - first))</tt> shall not overlap.
+ *  \pre The ranges <tt>[first,last)</tt> <tt>[values_first,values_last)</tt>, and <tt>[result, result + (last - first))</tt> shall not overlap.
  *
  *  The following code snippet demonstrates how to use \p binary_search
  *  to search for multiple values in a ordered range.
@@ -1757,7 +1757,7 @@ OutputIterator binary_search(ForwardIterator first,
  *                        and bool is convertible to \c OutputIterator's \c value_type.
  *  \tparam StrictWeakOrdering is a model of <a href="http://www.sgi.com/tech/stl/StrictWeakOrdering.html">Strict Weak Ordering</a>.
  *
- *  \pre The ranges <tt>[first,last)</tt> and <tt>[result, result + (last - first))</tt> shall not overlap.
+ *  \pre The ranges <tt>[first,last)</tt> <tt>[values_first,values_last)</tt>, and <tt>[result, result + (last - first))</tt> shall not overlap.
  *
  *  The following code snippet demonstrates how to use \p binary_search
  *  to search for multiple values in a ordered range using the \p thrust::device execution policy for
@@ -1834,7 +1834,7 @@ OutputIterator binary_search(const thrust::detail::execution_policy_base<Derived
  *                        and bool is convertible to \c OutputIterator's \c value_type.
  *  \tparam StrictWeakOrdering is a model of <a href="http://www.sgi.com/tech/stl/StrictWeakOrdering.html">Strict Weak Ordering</a>.
  *
- *  \pre The ranges <tt>[first,last)</tt> and <tt>[result, result + (last - first))</tt> shall not overlap.
+ *  \pre The ranges <tt>[first,last)</tt> <tt>[values_first,values_last)</tt>, and <tt>[result, result + (last - first))</tt> shall not overlap.
  *
  *  The following code snippet demonstrates how to use \p binary_search
  *  to search for multiple values in a ordered range.
