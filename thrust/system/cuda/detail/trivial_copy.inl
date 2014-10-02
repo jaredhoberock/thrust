@@ -67,6 +67,24 @@ template<typename System1,
 } // end cuda_memcpy_kind()
 
 
+template<typename System1,
+         typename System2>
+  cudaStream_t cuda_memcpy_stream(const thrust::cuda::execution_policy<System1> &system,
+                                  const thrust::cpp::execution_policy<System2> &)
+{
+  return stream(thrust::detail::derived_cast(system));
+} // end cuda_memcpy_stream()
+
+
+template<typename System1,
+         typename System2>
+  cudaStream_t cuda_memcpy_stream(const thrust::cpp::execution_policy<System1> &,
+                                  const thrust::cuda::execution_policy<System2> &system)
+{
+  return stream(thrust::detail::derived_cast(system));
+} // end cuda_memcpy_stream()
+
+
 } // end namespace trivial_copy_detail
 
 
@@ -110,9 +128,14 @@ void trivial_copy_n(cross_system<System1,System2> &systems,
 
   cudaMemcpyKind kind = trivial_copy_detail::cuda_memcpy_kind(thrust::detail::derived_cast(systems.system1), thrust::detail::derived_cast(systems.system2));
 
-  // XXX use stream 0 for now
-  //     we may wish to enable async host <-> device copy in the future
-  trivial_copy_detail::checked_cudaMemcpyAsync(dst, src, n * sizeof(T), kind, 0);
+  cudaStream_t stream = trivial_copy_detail::cuda_memcpy_stream(thrust::detail::derived_cast(systems.system1), thrust::detail::derived_cast(systems.system2));
+  
+  trivial_copy_detail::checked_cudaMemcpyAsync(dst, src, n * sizeof(T), kind, stream);
+  cudaError_t error = cudaStreamSynchronize(stream);
+  if(error)
+  {
+    throw thrust::system_error(error, thrust::cuda_category());
+  }
 }
 
 
