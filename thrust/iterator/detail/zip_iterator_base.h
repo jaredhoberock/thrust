@@ -21,10 +21,11 @@
 #include <thrust/iterator/iterator_categories.h>
 #include <thrust/iterator/detail/minimum_category.h>
 #include <thrust/iterator/detail/minimum_system.h>
+#include <thrust/detail/type_traits.h>
 #include <thrust/tuple.h>
 #include <thrust/detail/tuple/tuple_meta_transform.h>
+#include <thrust/detail/tuple/tuple_meta_accumulate.h>
 #include <thrust/detail/tuple/tuple_transform.h>
-#include <thrust/detail/type_traits.h>
 #include <thrust/detail/tuple/tuple_of_iterator_references.h>
 
 namespace thrust
@@ -98,67 +99,6 @@ struct dereference_iterator
 }; // end dereference_iterator
 
 
-// The namespace tuple_impl_specific provides two meta-
-// algorithms and two algorithms for tuples.
-namespace tuple_impl_specific
-{
-
-// define apply2 for tuple_meta_accumulate_impl
-template<typename UnaryMetaFunctionClass, class Arg1, class Arg2>
-  struct apply2
-    : UnaryMetaFunctionClass::template apply<Arg1,Arg2>
-{
-}; // end apply2
-
-
-// Meta-accumulate algorithm for tuples. Note: The template 
-// parameter StartType corresponds to the initial value in 
-// ordinary accumulation.
-//
-template<class Tuple, class BinaryMetaFun, class StartType>
-  struct tuple_meta_accumulate;
-
-template<
-    typename Tuple
-  , class BinaryMetaFun
-  , typename StartType
->
-  struct tuple_meta_accumulate_impl
-{
-   typedef typename apply2<
-       BinaryMetaFun
-     , typename Tuple::head_type
-     , typename tuple_meta_accumulate<
-           typename Tuple::tail_type
-         , BinaryMetaFun
-         , StartType 
-       >::type
-   >::type type;
-};
-
-
-template<
-    typename Tuple
-  , class BinaryMetaFun
-  , typename StartType
->
-struct tuple_meta_accumulate
-  : thrust::detail::eval_if<
-        thrust::detail::is_same<Tuple, thrust::null_type>::value
-      , thrust::detail::identity_<StartType>
-      , tuple_meta_accumulate_impl<
-            Tuple
-          , BinaryMetaFun
-          , StartType
-        >
-    > // end eval_if
-{
-}; // end tuple_meta_accumulate
-
-
-} // end end tuple_impl_specific
-
-
 // Metafunction to obtain the type of the tuple whose element types
 // are the value_types of an iterator tupel.
 //
@@ -192,7 +132,7 @@ struct minimum_traversal_category_in_iterator_tuple
     , thrust::iterator_traversal
   >::type tuple_of_traversal_tags;
       
-  typedef typename tuple_impl_specific::tuple_meta_accumulate<
+  typedef typename tuple_meta_accumulate<
       tuple_of_traversal_tags
     , minimum_category_lambda
     , thrust::random_access_traversal_tag
@@ -219,7 +159,7 @@ struct minimum_system_in_iterator_tuple
     thrust::iterator_system
   >::type tuple_of_system_tags;
 
-  typedef typename tuple_impl_specific::tuple_meta_accumulate<
+  typedef typename tuple_meta_accumulate<
     tuple_of_system_tags,
     minimum_system_lambda,
     thrust::any_system_tag

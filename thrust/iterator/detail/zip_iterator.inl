@@ -70,8 +70,6 @@ template<typename IteratorTuple>
     zip_iterator<IteratorTuple>
       ::dereference(void) const
 {
-  using namespace detail::tuple_impl_specific;
-
   return thrust::detail::tuple_host_device_transform<detail::dereference_iterator::template apply>(get_iterator_tuple(), detail::dereference_iterator());
 } // end zip_iterator::dereference()
 
@@ -92,9 +90,7 @@ __host__ __device__
   void zip_iterator<IteratorTuple>
     ::advance(typename super_t::difference_type n)
 {
-  using namespace detail::tuple_impl_specific;
-  tuple_for_each(m_iterator_tuple,
-                 detail::advance_iterator<typename super_t::difference_type>(n));
+  thrust::detail::tuple_for_each(m_iterator_tuple, detail::advance_iterator<typename super_t::difference_type>(n));
 } // end zip_iterator::advance()
 
 
@@ -103,8 +99,7 @@ __host__ __device__
   void zip_iterator<IteratorTuple>
     ::increment(void)
 {
-  using namespace detail::tuple_impl_specific;
-  tuple_for_each(m_iterator_tuple, detail::increment_iterator());
+  thrust::detail::tuple_for_each(m_iterator_tuple, detail::increment_iterator());
 } // end zip_iterator::increment()
 
 
@@ -113,8 +108,7 @@ __host__ __device__
   void zip_iterator<IteratorTuple>
     ::decrement(void)
 {
-  using namespace detail::tuple_impl_specific;
-  tuple_for_each(m_iterator_tuple, detail::decrement_iterator());
+  thrust::detail::tuple_for_each(m_iterator_tuple, detail::decrement_iterator());
 } // end zip_iterator::decrement()
 
 
