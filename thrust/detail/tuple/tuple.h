@@ -15,10 +15,6 @@
  */
 
 
-/*! \file tuple.h
- *  \brief A type encapsulating a heterogeneous collection of elements
- */
-
 /*
  * Copyright (C) 1999, 2000 Jaakko Järvi (jaakko.jarvi@cs.utu.fi)
  * 
@@ -43,14 +39,6 @@ namespace thrust
 
 /*! \addtogroup tuple
  *  \{
- */
-
-/*! \cond
- */
-
-struct null_type;
-
-/*! \endcond
  */
 
 /*! This metafunction returns the type of a

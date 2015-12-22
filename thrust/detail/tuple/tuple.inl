@@ -15,13 +15,11 @@
  */
 
 #include <thrust/detail/type_traits.h>
+#include <thrust/detail/tuple/legacy_helpers.h>
 #include <thrust/detail/swap.h>
 
 namespace thrust
 {
-
-// define null_type
-struct null_type {};
 
 // null_type comparisons
 __host__ __device__ inline
@@ -105,29 +103,6 @@ template <class HT, class TT> struct cons;
 
 } // end detail
 
-
-// -- some traits classes for get functions
-template <class T> struct access_traits
-{
-  typedef const T& const_type;
-  typedef T& non_const_type;
-
-  typedef const typename thrust::detail::remove_cv<T>::type& parameter_type;
-
-// used as the tuple constructors parameter types
-// Rationale: non-reference tuple element types can be cv-qualified.
-// It should be possible to initialize such types with temporaries,
-// and when binding temporaries to references, the reference must
-// be non-volatile and const. 8.5.3. (5)
-}; // end access_traits
-
-template <class T> struct access_traits<T&>
-{
-  typedef T& const_type;
-  typedef T& non_const_type;
-
-  typedef T& parameter_type;
-}; // end access_traits<T&>
 
 // forward declarations of get()
 template<int N, class HT, class TT>
