@@ -22,10 +22,10 @@
 #include <thrust/iterator/detail/minimum_category.h>
 #include <thrust/iterator/detail/minimum_system.h>
 #include <thrust/tuple.h>
-#include <thrust/detail/tuple_meta_transform.h>
-#include <thrust/detail/tuple_transform.h>
+#include <thrust/detail/tuple/tuple_meta_transform.h>
+#include <thrust/detail/tuple/tuple_transform.h>
 #include <thrust/detail/type_traits.h>
-#include <thrust/iterator/detail/tuple_of_iterator_references.h>
+#include <thrust/detail/tuple/tuple_of_iterator_references.h>
 
 namespace thrust
 {
