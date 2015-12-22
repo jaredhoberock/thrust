@@ -25,20 +25,36 @@ namespace detail
 {
 
 
-template<typename Fun>
-inline __host__ __device__
-Fun tuple_for_each(thrust::null_type, Fun f)
+template<int i, int end>
+struct tuple_for_each_impl
 {
-  return f;
-} // end tuple_for_each()
+  template<typename Tuple, typename Fun>
+  static inline __host__ __device__
+  Fun do_it(Tuple& t, Fun f)
+  {
+    f(thrust::get<i>(t));
+    return tuple_for_each_impl<i+1,end>::do_it(t, f);
+  }
+};
+
+
+template<int i>
+struct tuple_for_each_impl<i,i>
+{
+  template<typename Tuple, typename Fun>
+  static inline __host__ __device__
+  Fun do_it(Tuple&, Fun f)
+  {
+    return f;
+  }
+};
 
 
 template<typename Tuple, typename Fun>
 inline __host__ __device__
 Fun tuple_for_each(Tuple& t, Fun f)
 { 
-  f( t.get_head() );
-  return thrust::detail::tuple_for_each(t.get_tail(), f);
+  return tuple_for_each_impl<0,thrust::tuple_size<Tuple>::value>::do_it(t,f);
 } // end tuple_for_each()
 
 
