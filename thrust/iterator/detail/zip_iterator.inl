@@ -18,6 +18,7 @@
 
 #include <thrust/iterator/zip_iterator.h>
 #include <thrust/detail/tuple/tuple_transform.h>
+#include <thrust/detail/tuple/tuple_for_each.h>
 
 namespace thrust
 {

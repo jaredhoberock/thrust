@@ -103,14 +103,6 @@ struct dereference_iterator
 namespace tuple_impl_specific
 {
 
-// define apply1 for tuple_meta_transform_impl
-template<typename UnaryMetaFunctionClass, class Arg>
-  struct apply1
-    : UnaryMetaFunctionClass::template apply<Arg>
-{
-}; // end apply1
-
-
 // define apply2 for tuple_meta_accumulate_impl
 template<typename UnaryMetaFunctionClass, class Arg1, class Arg2>
   struct apply2
@@ -162,43 +154,6 @@ struct tuple_meta_accumulate
     > // end eval_if
 {
 }; // end tuple_meta_accumulate
-
-
-// transform algorithm for tuples. The template parameter Fun
-// must be a unary functor which is also a unary metafunction
-// class that computes its return type based on its argument
-// type. For example:
-//
-// struct to_ptr
-// {
-//     template <class Arg>
-//     struct apply
-//     {
-//          typedef Arg* type;
-//     }
-//
-//     template <class Arg>
-//     Arg* operator()(Arg x);
-// };
-
-
-
-// for_each algorithm for tuples.
-template<typename Fun>
-inline __host__ __device__
-Fun tuple_for_each(thrust::null_type, Fun f)
-{
-  return f;
-} // end tuple_for_each()
-
-
-template<typename Tuple, typename Fun>
-inline __host__ __device__
-Fun tuple_for_each(Tuple& t, Fun f)
-{ 
-  f( t.get_head() );
-  return tuple_for_each(t.get_tail(), f);
-} // end tuple_for_each()
 
 
 } // end end tuple_impl_specific
