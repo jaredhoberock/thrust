@@ -48,9 +48,9 @@ template<
 
     // allow assignment from tuples
     // XXX might be worthwhile to guard this with an enable_if is_assignable
-    template<typename U1, typename U2>
+    template<typename U1, typename U2, typename U3, typename U4, typename U5, typename U6, typename U7, typename U8, typename U9>
     inline __host__ __device__
-    tuple_of_iterator_references &operator=(const detail::cons<U1,U2> &other)
+    tuple_of_iterator_references& operator=(const thrust::tuple<U1,U2,U3,U4,U5,U6,U7,U8,U9> &other)
     {
       super_t::operator=(other);
       return *this;
