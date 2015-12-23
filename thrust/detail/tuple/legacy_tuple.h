@@ -27,7 +27,7 @@
 #pragma once
 
 #include <thrust/detail/config.h>
-#include <thrust/detail/tuple.inl>
+#include <thrust/detail/tuple/legacy_tuple.inl>
 #include <thrust/pair.h>
 
 namespace thrust

@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-#pragma
+#pragma once
 
 #include <thrust/detail/config.h>
 #include <thrust/detail/type_traits.h>

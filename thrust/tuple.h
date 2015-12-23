@@ -22,7 +22,7 @@
 #pragma once
 
 #include <thrust/detail/config.h>
-#include <thrust/detail/tuple/tuple.h>
+#include <thrust/detail/tuple/legacy_tuple.h>
 
 // XXX TODO add Doxygen-commented interface
 
