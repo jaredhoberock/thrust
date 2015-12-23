@@ -24,6 +24,23 @@ namespace thrust
 namespace detail
 {
 
+#if __thrust_lib_has_variadic_tuple
+
+template<typename Tuple,
+         template<typename> class UnaryMetaFunction>
+  struct tuple_meta_transform;
+
+template<typename... Types,
+         template<typename> class UnaryMetaFunction,
+         template<typename...> class Tuple>
+  struct tuple_meta_transform<Tuple<Types...>,UnaryMetaFunction>
+{
+  typedef thrust::tuple<
+    typename UnaryMetaFunction<Types>::type...
+  > type;
+};
+#else
+
 template<typename Tuple,
          template<typename> class UnaryMetaFunction,
          unsigned int sz = thrust::tuple_size<Tuple>::value>
@@ -170,6 +187,8 @@ template<typename Tuple,
     typename UnaryMetaFunction<typename thrust::tuple_element<9,Tuple>::type>::type
   > type;
 };
+
+#endif // __thrust_lib_has_variadic_tuple
 
 } // end detail
 

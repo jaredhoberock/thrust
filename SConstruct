@@ -230,15 +230,18 @@ def lib_paths(env, host_backend, device_backend):
   return result
 
 
-def libs(env, CCX, host_backend, device_backend):
+def libs(env, CCX, std, host_backend, device_backend):
   """Returns a list of libraries to link against"""
   result = []
 
-  # when compiling with g++, link against the standard library
+  # when compiling with g++ or clang, link against the standard library
   # we don't have to do this with cl
-  if CCX == 'g++':
+  if CCX == 'g++' or 'clang':
     result.append('stdc++')
     result.append('m')
+
+    if std == 'c++11':
+      result.append('pthread')
 
   # link against backend-specific runtimes
   if host_backend == 'cuda' or device_backend == 'cuda':
@@ -456,7 +459,7 @@ for (host,device) in itertools.product(host_backends, device_backends):
   
   env.Append(NVCCFLAGS = nv_compiler_flags(env['mode'], device, env['arch'], env['cdp']))
   
-  env.Append(LIBS = libs(env, env.subst('$CXX'), host, device))
+  env.Append(LIBS = libs(env, env.subst('$CXX'), env['std'], host, device))
 
   # XXX this probably doesn't belong here
   # XXX ideally we'd integrate this into site_scons

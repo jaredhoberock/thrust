@@ -17,5 +17,11 @@
 #pragma once
 
 #include <thrust/detail/config.h>
+#include <thrust/tuple.h>
+
+#if __thrust_lib_has_variadic_tuple
+#include <thrust/detail/tuple/variadic_tuple_of_iterator_references.h>
+#else
 #include <thrust/detail/tuple/legacy_tuple_of_iterator_references.h>
+#endif
 

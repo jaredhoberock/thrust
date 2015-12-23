@@ -22,7 +22,12 @@
 #pragma once
 
 #include <thrust/detail/config.h>
+
+#if __cplusplus < 201103L
 #include <thrust/detail/tuple/legacy_tuple.h>
+#else
+#include <thrust/detail/tuple/variadic_tuple.h>
+#endif
 
 // XXX TODO add Doxygen-commented interface
 

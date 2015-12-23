@@ -749,7 +749,11 @@ template <class T>
     KNOWN_FAILURE;
 #else
     // be careful not to generate a range larger than we can represent
-    n = thrust::min<size_t>(n, std::numeric_limits<T>::max());
+    T max = std::numeric_limits<T>::max();
+    if(double(max) < double(n))
+    {
+      n = max;
+    }
 
     thrust::counting_iterator<T, thrust::host_system_tag>   h_first = thrust::make_counting_iterator<T>(0);
     thrust::counting_iterator<T, thrust::device_system_tag> d_first = thrust::make_counting_iterator<T>(0);
@@ -774,7 +778,11 @@ template <typename T>
     KNOWN_FAILURE;
 #else
     // be careful not to generate a range larger than we can represent
-    n = thrust::min<size_t>(n, std::numeric_limits<T>::max());
+    T max = std::numeric_limits<T>::max();
+    if(double(max) < double(n))
+    {
+      n = max;
+    }
 
     thrust::counting_iterator<T, thrust::host_system_tag>   h_first = thrust::make_counting_iterator<T>(0);
     thrust::counting_iterator<T, thrust::device_system_tag> d_first = thrust::make_counting_iterator<T>(0);

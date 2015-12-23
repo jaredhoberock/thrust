@@ -12,7 +12,7 @@ struct TestTupleConstructor
   {
     using namespace thrust;
 
-    host_vector<T> data = random_integers<T>(10);
+    host_vector<T> data = random_integers<T>(11);
 
     tuple<T> t1(data[0]);
     ASSERT_EQUAL(data[0], get<0>(t1));
@@ -88,6 +88,21 @@ struct TestTupleConstructor
     ASSERT_EQUAL(data[7], get<7>(t10));
     ASSERT_EQUAL(data[8], get<8>(t10));
     ASSERT_EQUAL(data[9], get<9>(t10));
+
+#if __thrust_lib_has_variadic_tuple
+    tuple<T,T,T,T,T,T,T,T,T,T,T> t11(data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7], data[8], data[9], data[10]);
+    ASSERT_EQUAL( data[0],  get<0>(t11));
+    ASSERT_EQUAL( data[1],  get<1>(t11));
+    ASSERT_EQUAL( data[2],  get<2>(t11));
+    ASSERT_EQUAL( data[3],  get<3>(t11));
+    ASSERT_EQUAL( data[4],  get<4>(t11));
+    ASSERT_EQUAL( data[5],  get<5>(t11));
+    ASSERT_EQUAL( data[6],  get<6>(t11));
+    ASSERT_EQUAL( data[7],  get<7>(t11));
+    ASSERT_EQUAL( data[8],  get<8>(t11));
+    ASSERT_EQUAL( data[9],  get<9>(t11));
+    ASSERT_EQUAL(data[10], get<10>(t11));
+#endif
   }
 };
 SimpleUnitTest<TestTupleConstructor, NumericTypes> TestTupleConstructorInstance;
@@ -99,7 +114,7 @@ struct TestMakeTuple
   {
     using namespace thrust;
 
-    host_vector<T> data = random_integers<T>(10);
+    host_vector<T> data = random_integers<T>(11);
 
     tuple<T> t1 = make_tuple(data[0]);
     ASSERT_EQUAL(data[0], get<0>(t1));
@@ -175,6 +190,21 @@ struct TestMakeTuple
     ASSERT_EQUAL(data[7], get<7>(t10));
     ASSERT_EQUAL(data[8], get<8>(t10));
     ASSERT_EQUAL(data[9], get<9>(t10));
+
+#if __thrust_lib_has_variadic_tuple
+    tuple<T,T,T,T,T,T,T,T,T,T,T> t11 = make_tuple(data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7], data[8], data[9], data[10]);
+    ASSERT_EQUAL( data[0],  get<0>(t10));
+    ASSERT_EQUAL( data[1],  get<1>(t10));
+    ASSERT_EQUAL( data[2],  get<2>(t10));
+    ASSERT_EQUAL( data[3],  get<3>(t10));
+    ASSERT_EQUAL( data[4],  get<4>(t10));
+    ASSERT_EQUAL( data[5],  get<5>(t10));
+    ASSERT_EQUAL( data[6],  get<6>(t10));
+    ASSERT_EQUAL( data[7],  get<7>(t10));
+    ASSERT_EQUAL( data[8],  get<8>(t10));
+    ASSERT_EQUAL( data[9],  get<9>(t10));
+    ASSERT_EQUAL(data[10], get<10>(t11));
+#endif
   }
 };
 SimpleUnitTest<TestMakeTuple, NumericTypes> TestMakeTupleInstance;
@@ -185,7 +215,7 @@ struct TestTupleGet
   void operator()(void)
   {
     using namespace thrust;
-    host_vector<T> data = random_integers<T>(10);
+    host_vector<T> data = random_integers<T>(11);
 
     tuple<T> t1(data[0]);
     ASSERT_EQUAL(data[0], thrust::get<0>(t1));
@@ -261,6 +291,21 @@ struct TestTupleGet
     ASSERT_EQUAL(data[7], thrust::get<7>(t10));
     ASSERT_EQUAL(data[8], thrust::get<8>(t10));
     ASSERT_EQUAL(data[9], thrust::get<9>(t10));
+
+#if __thrust_lib_has_variadic_tuple
+    tuple<T,T,T,T,T,T,T,T,T,T,T> t11 = make_tuple(data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7], data[8], data[9], data[10]);
+    ASSERT_EQUAL( data[0],  thrust::get<0>(t10));
+    ASSERT_EQUAL( data[1],  thrust::get<1>(t10));
+    ASSERT_EQUAL( data[2],  thrust::get<2>(t10));
+    ASSERT_EQUAL( data[3],  thrust::get<3>(t10));
+    ASSERT_EQUAL( data[4],  thrust::get<4>(t10));
+    ASSERT_EQUAL( data[5],  thrust::get<5>(t10));
+    ASSERT_EQUAL( data[6],  thrust::get<6>(t10));
+    ASSERT_EQUAL( data[7],  thrust::get<7>(t10));
+    ASSERT_EQUAL( data[8],  thrust::get<8>(t10));
+    ASSERT_EQUAL( data[9],  thrust::get<9>(t10));
+    ASSERT_EQUAL(data[10], thrust::get<10>(t11));
+#endif
   }
 };
 SimpleUnitTest<TestTupleGet, NumericTypes> TestTupleGetInstance;
@@ -339,7 +384,7 @@ struct TestTupleTieFunctor
 
     bool result = true;
 
-    T data[10];
+    T data[11];
     clear(data);
 
     tie(data[0]) = make_tuple(0);;
@@ -426,6 +471,22 @@ struct TestTupleTieFunctor
     result &= data[8] == 8;
     result &= data[9] == 9;
     clear(data);
+
+#if __thrust_lib_has_variadic_tuple
+    tie(data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7], data[8], data[9], data[10]) = make_tuple(0,1,2,3,4,5,6,7,8,9,10);
+    result &= data[0] == 0;
+    result &= data[1] == 1;
+    result &= data[2] == 2;
+    result &= data[3] == 3;
+    result &= data[4] == 4;
+    result &= data[5] == 5;
+    result &= data[6] == 6;
+    result &= data[7] == 7;
+    result &= data[8] == 8;
+    result &= data[9] == 9;
+    result &= data[10] == 10;
+    clear(data);
+#endif
 
     return result;
   }

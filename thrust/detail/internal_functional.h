@@ -275,20 +275,6 @@ template<typename T>
       >
 {};
 
-template<typename T> struct is_tuple_of_iterator_references : thrust::detail::false_type {};
-
-template<typename T1, typename T2, typename T3,
-         typename T4, typename T5, typename T6,
-         typename T7, typename T8, typename T9,
-         typename T10>
-  struct is_tuple_of_iterator_references<
-    thrust::detail::tuple_of_iterator_references<
-      T1,T2,T3,T4,T5,T6,T7,T8,T9,T10
-    >
-  >
-    : thrust::detail::true_type
-{};
-
 // use this enable_if to avoid assigning to temporaries in the transform functors below
 // XXX revisit this problem with c++11 perfect forwarding
 template<typename T>

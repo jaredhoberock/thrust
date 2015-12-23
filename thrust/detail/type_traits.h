@@ -378,6 +378,7 @@ template<typename T1, typename T2>
 
 // mpl stuff
 
+#if __cplusplus < 201103L
 template <typename Condition1,               typename Condition2,              typename Condition3 = false_type,
           typename Condition4  = false_type, typename Condition5 = false_type, typename Condition6 = false_type,
           typename Condition7  = false_type, typename Condition8 = false_type, typename Condition9 = false_type,
@@ -389,6 +390,22 @@ template <typename Condition1,               typename Condition2,              t
       >
 {
 }; // end or_
+#else
+template<class... Conditions>
+struct or_;
+
+template<>
+struct or_<> : false_type {};
+
+template<class Condition1, class... Conditions>
+struct or_<Condition1,Conditions...>
+  : public integral_constant<
+      bool,
+      Condition1::value || or_<Conditions...>::value
+    >
+{
+}; // end or_
+#endif // __cplusplus
 
 template <typename Condition1, typename Condition2, typename Condition3 = true_type>
   struct and_

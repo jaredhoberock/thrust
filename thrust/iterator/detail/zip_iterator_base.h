@@ -196,6 +196,20 @@ template<typename Tuple>
 };
 
 
+
+
+#if __thrust_lib_has_variadic_tuple
+template<class IteratorTuple>
+  struct tuple_of_iterator_references;
+
+template<class... Iterators>
+  struct tuple_of_iterator_references<thrust::tuple<Iterators...>>
+{
+  typedef thrust::detail::tuple_of_iterator_references<
+    typename thrust::iterator_reference<Iterators>::type...
+  > type;
+};
+#else
 template<typename IteratorTuple>
   struct tuple_of_iterator_references
 {
@@ -222,6 +236,7 @@ template<typename IteratorTuple>
     typename elements::T9
   > type;
 };
+#endif // __thrust_lib_has_variadic_tuple
 
 
 } // end zip_iterator_base_ns
