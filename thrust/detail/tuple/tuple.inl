@@ -21,25 +21,6 @@
 namespace thrust
 {
 
-// null_type comparisons
-__host__ __device__ inline
-bool operator==(const null_type&, const null_type&) { return true; }
-
-__host__ __device__ inline
-bool operator>=(const null_type&, const null_type&) { return true; }
-
-__host__ __device__ inline
-bool operator<=(const null_type&, const null_type&) { return true; }
-
-__host__ __device__ inline
-bool operator!=(const null_type&, const null_type&) { return false; }
-
-__host__ __device__ inline
-bool operator<(const null_type&, const null_type&) { return false; }
-
-__host__ __device__ inline
-bool operator>(const null_type&, const null_type&) { return false; }
-
 // forward declaration for tuple
 template <
   class T0 = null_type, class T1 = null_type, class T2 = null_type,

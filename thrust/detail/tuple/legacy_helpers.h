@@ -27,6 +27,26 @@ namespace thrust
 // define null_type
 struct null_type {};
 
+// null_type comparisons
+__host__ __device__ inline
+bool operator==(const null_type&, const null_type&) { return true; }
+
+__host__ __device__ inline
+bool operator>=(const null_type&, const null_type&) { return true; }
+
+__host__ __device__ inline
+bool operator<=(const null_type&, const null_type&) { return true; }
+
+__host__ __device__ inline
+bool operator!=(const null_type&, const null_type&) { return false; }
+
+__host__ __device__ inline
+bool operator<(const null_type&, const null_type&) { return false; }
+
+__host__ __device__ inline
+bool operator>(const null_type&, const null_type&) { return false; }
+
+
 
 template <class T> struct access_traits
 {
