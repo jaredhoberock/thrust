@@ -18,7 +18,6 @@
 
 #include <thrust/detail/config.h>
 #include <thrust/tuple.h>
-#include <thrust/detail/type_traits.h>
 
 namespace thrust
 {
@@ -34,49 +33,30 @@ template<typename UnaryMetaFunctionClass, class Arg1, class Arg2>
 }; // end apply2
 
 
+template<int i, int end, typename Tuple, class BinaryMetaFunction, class StartType>
+struct tuple_meta_accumulate_impl
+{
+  typedef typename apply2<
+    BinaryMetaFunction,
+    typename thrust::tuple_element<i,Tuple>::type,
+    typename tuple_meta_accumulate_impl<i+1,end,Tuple,BinaryMetaFunction,StartType>::type
+  >::type type;
+};
+
+template<int i, typename Tuple, class BinaryMetaFunction, class StartType>
+struct tuple_meta_accumulate_impl<i,i,Tuple,BinaryMetaFunction,StartType>
+{
+  typedef StartType type;
+};
+
 // Meta-accumulate algorithm for tuples. Note: The template 
 // parameter StartType corresponds to the initial value in 
 // ordinary accumulation.
 //
-template<class Tuple, class BinaryMetaFun, class StartType>
-  struct tuple_meta_accumulate;
-
-template<
-    typename Tuple
-  , class BinaryMetaFun
-  , typename StartType
->
-  struct tuple_meta_accumulate_impl
-{
-   typedef typename apply2<
-       BinaryMetaFun
-     , typename Tuple::head_type
-     , typename tuple_meta_accumulate<
-           typename Tuple::tail_type
-         , BinaryMetaFun
-         , StartType 
-       >::type
-   >::type type;
-};
-
-
-template<
-    typename Tuple
-  , class BinaryMetaFun
-  , typename StartType
->
+template<typename Tuple, class BinaryMetaFunction, class StartType>
 struct tuple_meta_accumulate
-  : thrust::detail::eval_if<
-        thrust::detail::is_same<Tuple, thrust::null_type>::value
-      , thrust::detail::identity_<StartType>
-      , tuple_meta_accumulate_impl<
-            Tuple
-          , BinaryMetaFun
-          , StartType
-        >
-    > // end eval_if
-{
-}; // end tuple_meta_accumulate
+  : tuple_meta_accumulate_impl<0,thrust::tuple_size<Tuple>::value,Tuple,BinaryMetaFunction,StartType> 
+{};
 
 
 } // end detail
