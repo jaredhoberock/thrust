@@ -156,6 +156,10 @@ class tuple_leaf_base
     __host__ __device__
     tuple_leaf_base(U&& arg) : val_(std::forward<U>(arg)) {}
 
+    __thrust_exec_check_disable__
+    __host__ __device__
+    ~tuple_leaf_base() = default;
+
     __host__ __device__
     const T& const_get() const
     {
